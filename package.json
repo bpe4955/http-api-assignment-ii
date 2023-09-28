@@ -1,0 +1,26 @@
+{
+  "name": "http-api-assignment-ii",
+  "version": "1.0.0",
+  "description": "Build a simple HTTP API using the GET, HEAD, & POST methods",
+  "main": "./src/server.js",
+  "scripts": {
+    "start": "node ./src/server.js",
+    "pretest": "eslint ./src --fix",
+    "test": "echo \"Tests complete\" "
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bpe4955/http-api-assignment-ii"
+  },
+  "author": "Brian Egan",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/bpe4955/http-api-assignment-ii/issues"
+  },
+  "homepage": "https://github.com/bpe4955/streaming-media-assignment#readme",
+  "devDependencies": {
+    "eslint": "^8.49.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-plugin-import": "^2.28.1"
+  }
+}
