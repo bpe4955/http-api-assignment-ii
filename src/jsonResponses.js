@@ -18,11 +18,11 @@ const respondJSONMeta = (request, response, status) => {
 
 // return user object as JSON
 const getUsers = (request, response, head) => {
-  if(!head){
-    const responseJSON = { users, };
+  if (!head) {
+    const responseJSON = { users };
     return respondJSON(request, response, 200, responseJSON);
   }
-  respondJSONMeta(request, response, 200);
+  return respondJSONMeta(request, response, 200);
 };
 // function to add a user from a POST body
 const addUser = (request, response, body) => {
@@ -31,8 +31,7 @@ const addUser = (request, response, body) => {
     message: 'Name and age are both required.',
   };
 
-  if(!body){
-    console.log('No Body');
+  if (!body) {
     responseJSON.message = 'No body sent with POST request';
     responseJSON.id = 'noBodySent';
     return respondJSON(request, response, 501, responseJSON);
@@ -74,15 +73,15 @@ const addUser = (request, response, body) => {
 };
 
 const notFound = (request, response, head) => {
-    if(!head){
-      const responseJSON = { 
-        message: 'The data you are looking for cannot be found',
-        id: 'notFound' 
-        };
-      return respondJSON(request, response, 404, responseJSON);
-    }
-    respondJSONMeta(request, response, 404);
-  };
+  if (!head) {
+    const responseJSON = {
+      message: 'The data you are looking for cannot be found',
+      id: 'notFound',
+    };
+    return respondJSON(request, response, 404, responseJSON);
+  }
+  return respondJSONMeta(request, response, 404);
+};
 
 // public exports
 module.exports = {

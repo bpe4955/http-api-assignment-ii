@@ -14,32 +14,19 @@ const urlStruct = {
   '/notReal': jsonHandler.notFound,
 };
 
-// Take in requests and send them off to cooresponding functions to be handled
-const onRequest = (request, response) => {
-  console.log(request.url);
-  console.log(request.method);
-
-  const parsedURL = url.parse(request.url);
-  const params = query.parse(parsedURL.query);
-
-  if (request.method === 'POST') { handlePost(request, response, params, parsedURL); }
-  else if (request.method === 'GET') { handleGet(request, response, params, parsedURL); }
-  else if (request.method === 'HEAD') { handleHead(request, response, params, parsedURL); }
-};
-
 // Handle get requests, such as getting the html page or data
 const handleGet = (request, response, params, parsedURL) => {
   if (urlStruct[parsedURL.pathname]) {
-    urlStruct[parsedURL.pathname](request, response/*, params*/);
+    urlStruct[parsedURL.pathname](request, response/* , params */);
   } else {
-    urlStruct['/notReal'](request, response/*, params*/);
+    urlStruct['/notReal'](request, response/* , params */);
   }
 };
 
 // Handle post requests, mainly adding users to data
 const handlePost = (request, response, params, parsedURL) => {
-  if(!urlStruct[parsedURL.pathname]) { urlStruct['/notReal'](request, response/*, params*/); }
-  
+  if (!urlStruct[parsedURL.pathname]) { urlStruct['/notReal'](request, response/* , params */); }
+
   const body = [];
 
   // Handle a request error
@@ -54,7 +41,7 @@ const handlePost = (request, response, params, parsedURL) => {
     body.push(chunk);
   });
 
-  //What to do once all the data has been obtained
+  // What to do once all the data has been obtained
   request.on('end', () => {
     // Connect the body into one string then turn that string into an object
     const bodyString = Buffer.concat(body).toString();
@@ -63,7 +50,6 @@ const handlePost = (request, response, params, parsedURL) => {
 
     urlStruct[parsedURL.pathname](request, response, bodyParams);
   });
-  
 };
 
 const handleHead = (request, response, params, parsedURL) => {
@@ -72,6 +58,17 @@ const handleHead = (request, response, params, parsedURL) => {
   } else {
     urlStruct['/notReal'](request, response, true);
   }
+};
+
+// Take in requests and send them off to cooresponding functions to be handled
+const onRequest = (request, response) => {
+  console.log(request.url);
+  console.log(request.method);
+
+  const parsedURL = url.parse(request.url);
+  const params = query.parse(parsedURL.query);
+
+  if (request.method === 'POST') { handlePost(request, response, params, parsedURL); } else if (request.method === 'GET') { handleGet(request, response, params, parsedURL); } else if (request.method === 'HEAD') { handleHead(request, response, params, parsedURL); }
 };
 
 http.createServer(onRequest).listen(port, () => {
